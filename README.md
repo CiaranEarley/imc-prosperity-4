@@ -20,6 +20,7 @@ I was the team captain and designed the algorithmic and manual strategy stack re
 | Volatility research | `research/options_volatility_research.py` | Research support for option fair value, implied volatility and volatility-smile behaviour. |
 | Backtester | `tools/backtester/run_backtest.py` | Custom replay engine for historical market data and fill approximation. |
 | Visualizer | `tools/visualizer/prosperity_visualizer.py` | Desktop dashboard for inspecting market replay output, own quotes, fills, positions and PnL. |
+| Manual trading notes | `docs/manual-trading.md` | Public-safe round-by-round summary of the manual trading models and decisions. |
 
 ## Research Loop
 
@@ -66,7 +67,7 @@ Key ideas:
 
 ### Manual Trading Research
 
-Represented by `research/manual_trading_decision_model.py` and `research/manual_population_simulation.py`.
+Represented by `docs/manual-trading.md`, `research/manual_trading_decision_model.py` and `research/manual_population_simulation.py`.
 
 Manual trading work used technical valuation and decision-distribution reasoning to model how other participants were likely to act under payoff uncertainty.
 
@@ -86,18 +87,17 @@ Key ideas:
 | `research/round5_parameter_optimizer.py` | Parameter-search workflow for product-level strategy tuning. |
 | `research/round5_decision_report.py` | Decision/reporting support for comparing strategy variants. |
 
-## Screenshots To Add
+## Research Tooling Evidence
 
-Screenshots are intentionally not included yet. The best screenshots for this repo would be:
+The screenshots below show the custom visualizer used to inspect replay output, fills, inventory, drawdown, spreads and run statistics.
 
-| Priority | Screenshot | Suggested filename | What it should show |
-| --- | --- | --- | --- |
-| 1 | Visualizer overview | `docs/assets/screenshots/visualizer-overview.png` | Full dashboard with PnL, positions/fills and order-book/quote diagnostics visible. |
-| 2 | Backtester run summary | `docs/assets/screenshots/backtester-run-summary.png` | A clean run summary or comparison table without local file paths or sensitive machine details. |
-| 3 | Strategy comparison | `docs/assets/screenshots/strategy-comparison.png` | Parameter/variant comparison showing how strategies were evaluated. |
-| 4 | Options research | `docs/assets/screenshots/options-volatility-research.png` | Volatility smile, residual or implied-volatility diagnostic plot. |
+![Visualizer overview](docs/assets/screenshots/visualizer-overview.jpg)
 
-See `docs/screenshots.md` for capture guidance.
+![Risk diagnostics](docs/assets/screenshots/visualizer-risk.jpg)
+
+![Run statistics](docs/assets/screenshots/visualizer-statistics.jpg)
+
+Additional screenshots and capture notes are in `docs/screenshots.md`.
 
 ## Repository Structure
 
@@ -106,18 +106,17 @@ strategies/       Selected final/substantive strategy files.
 research/         Research, optimization and manual-trading analysis scripts.
 tools/backtester/ Custom market replay and execution approximation tool.
 tools/visualizer/ Desktop visualizer for run review and diagnostics.
-docs/             Strategy notes, sanitization notes and screenshot plan.
+docs/             Strategy notes, manual trading notes, sanitization notes and screenshots.
 ```
 
 ## Data And Generated Outputs
 
-Historical CSVs, generated run archives, logs, cache files, screenshots, spreadsheets and third-party research copies are intentionally excluded from this public portfolio repository. The goal is to keep the repository readable and focused on strategy design, modelling and research tooling.
+Historical CSVs, generated run archives, logs, cache files, spreadsheets and third-party research copies are intentionally excluded from this public portfolio repository. A small set of curated screenshots is included to show the research tooling without publishing raw generated artifacts. The goal is to keep the repository readable and focused on strategy design, modelling and research tooling.
 
 ## Status
 
 This is a first public sanitized version. Next improvements:
 
-- Add the screenshots listed above.
 - Add a small anonymized/sample dataset if useful.
 - Clean selected scripts with more consistent docstrings.
 - Add example commands once a small sample dataset is available.

@@ -49,6 +49,9 @@ Price & Trade Data/
 *.gif
 *.webp
 *.pdf
+!docs/assets/screenshots/*.png
+!docs/assets/screenshots/*.jpg
+!docs/assets/screenshots/*.jpeg
 
 # Local secrets or machine-specific config
 .env

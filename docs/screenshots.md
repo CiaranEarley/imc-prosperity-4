@@ -1,15 +1,23 @@
-# Screenshot Plan
+# Screenshots
 
-The repo will look much stronger with a few targeted screenshots. The goal is to show the full research loop, not to decorate the README.
+The repo includes a small set of curated screenshots to show the research loop and tooling without publishing raw run archives, spreadsheets or local machine paths.
 
-## Priority Screenshots
+## Included Screenshots
 
-| Priority | Filename | Capture |
-| --- | --- | --- |
-| 1 | `docs/assets/screenshots/visualizer-overview.png` | Full visualizer dashboard with PnL, positions/fills and order-book/own-quote diagnostics visible. |
-| 2 | `docs/assets/screenshots/backtester-run-summary.png` | Backtester run summary or comparison output showing replay, fills/PnL and strategy result metrics. |
-| 3 | `docs/assets/screenshots/strategy-comparison.png` | Strategy/parameter comparison from optimizer or report output. |
-| 4 | `docs/assets/screenshots/options-volatility-research.png` | Options-volatility diagnostic: smile fit, residuals, implied volatility or related plot. |
+| Filename | Shows |
+| --- | --- |
+| `docs/assets/screenshots/visualizer-overview.jpg` | Order book view with own buys/sells, quotes, derived indicators and trade-flow diagnostics. |
+| `docs/assets/screenshots/visualizer-risk.jpg` | Drawdown and time-below-prior-high diagnostics. |
+| `docs/assets/screenshots/visualizer-inventory.jpg` | Inventory path reconstructed from own fills. |
+| `docs/assets/screenshots/visualizer-spreads.jpg` | Spread analysis, residual mean and residual z-score diagnostics. |
+| `docs/assets/screenshots/visualizer-statistics.jpg` | Run-level summary statistics including PnL, Sharpe-style metrics, drawdown and fill/quote information. |
+| `docs/assets/screenshots/visualizer-normalized-quotes.jpg` | Normalized order book view showing own quotes and fills relative to wall mid. |
+
+## Not Included Yet
+
+The desktop backtester screenshot was not added because the current capture includes local Windows paths and a username. Recapture or redact it before publishing.
+
+No options-volatility research screenshot is included yet because no clean visual capture was available. The code evidence remains in `research/options_volatility_research.py`.
 
 ## Capture Rules
 
@@ -19,16 +27,8 @@ The repo will look much stronger with a few targeted screenshots. The goal is to
 - Use readable zoom levels. Tiny terminal text does not help.
 - Do not include competition login pages, private account identifiers or anything from non-public sources.
 
-## How The README Will Use Them
+## README Usage
 
-Once images are added, the README can include a compact evidence section:
+The README includes only a few representative images. Keep additional captures here so the front page remains readable.
 
-```md
-## Research Tooling Evidence
-
-![Visualizer overview](docs/assets/screenshots/visualizer-overview.png)
-![Backtester run summary](docs/assets/screenshots/backtester-run-summary.png)
-![Options volatility research](docs/assets/screenshots/options-volatility-research.png)
-```
-
-Only add the image links once the files exist, so the public README does not show broken images.
+Only add image links after the files exist, so the public README does not show broken images.

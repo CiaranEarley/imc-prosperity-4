@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from manual_round3_decision_model import HIGH, LOW, STEP, TICK_BIDS, best_bid_pair, sequential_profit
+from manual_trading_decision_model import HIGH, LOW, STEP, TICK_BIDS, best_bid_pair, sequential_profit
 
 
 N_TEAMS = 4_000
