@@ -2,18 +2,102 @@
 
 Selected strategy, research and tooling files from my IMC Prosperity 4 competition work.
 
-I was the team captain and designed the algorithmic and manual strategy stack represented here. Final results were pending when this repository was first created.
+I was the team captain and designed the algorithmic and manual strategy stack represented here. The emphasis was on dynamic, model-led trading logic rather than brittle historical price anchors: fair values, volatility surfaces, residual filters, inventory controls, market replay and visual diagnostics.
 
-This repository is intentionally curated: it keeps the strongest strategy and research work, with clean filenames and without the generated run archives, logs, caches, screenshots, spreadsheets or third-party research copies from the original working folder.
+## What This Shows
 
-## Highlights
+- **Trading research:** fair-value estimation, market making, options pricing, implied volatility, volatility-smile fitting, residual z-score filters and manual decision modelling.
+- **Execution logic:** passive and active quote placement, inventory-aware sizing, position limits, stale-signal avoidance and product-level risk pruning.
+- **Research infrastructure:** custom market replay backtester, fill approximation, parameter search and desktop visualizer for PnL, fills, quotes, positions and order-book state.
+- **Risk judgement:** strategies were built to adapt to changing conditions rather than rely on hardcoded price levels that could fail after a regime change.
 
-- Dynamic, model-led strategies rather than brittle hardcoded historical price anchors.
-- Options pricing, implied volatility estimation, volatility-smile modelling and residual filters.
-- Inventory-aware passive and active execution.
-- Custom backtester for market replay and fill approximation.
-- Desktop visualizer for PnL, fills, quotes, positions, order-book state and strategy comparison.
-- Manual trading decision models using scenario and population-level reasoning.
+## Start Here
+
+| Area | File | Why it matters |
+| --- | --- | --- |
+| Final strategy stack | `strategies/round5_dynamic_multi_asset_market_maker.py` | Dynamic multi-asset market maker using rolling fair values, warmup regimes, product-level risk pruning and inventory-aware quoting. |
+| Options strategy | `strategies/round4_options_hydrogel_strategy.py` | Expanded options and hydrogel strategy using passive/active execution, signal filtering and risk controls. |
+| Volatility research | `research/options_volatility_research.py` | Research support for option fair value, implied volatility and volatility-smile behaviour. |
+| Backtester | `tools/backtester/run_backtest.py` | Custom replay engine for historical market data and fill approximation. |
+| Visualizer | `tools/visualizer/prosperity_visualizer.py` | Desktop dashboard for inspecting market replay output, own quotes, fills, positions and PnL. |
+
+## Research Loop
+
+```mermaid
+flowchart LR
+    A["Market data<br/>order books and public trades"] --> B["Model fair value<br/>EMA, options, smile, residuals"]
+    B --> C["Generate orders<br/>passive, active, inventory skew"]
+    C --> D["Replay and approximate fills<br/>custom backtester"]
+    D --> E["Inspect diagnostics<br/>PnL, fills, quotes, positions"]
+    E --> F["Refine parameters<br/>risk, sizing, filters"]
+    F --> B
+```
+
+## Strategy Families
+
+### Dynamic Multi-Asset Market Making
+
+Represented by `strategies/round5_dynamic_multi_asset_market_maker.py`.
+
+The round 5 strategy uses rolling fair values, warmup regimes and product-specific configuration. Products are traded only when live book state, edge thresholds and inventory constraints allow it.
+
+Key ideas:
+
+- EMA-style live fair-value estimates.
+- Product-specific edge, size and soft-limit controls.
+- Passive quoting with selective active overlays.
+- Warmup logic to avoid overreacting early in a run.
+- Inventory skew and position-limit-aware order sizing.
+
+### Options And Volatility Modelling
+
+Represented by `strategies/round3_options_smile_strategy.py`, `strategies/round4_options_hydrogel_strategy.py` and `research/options_volatility_research.py`.
+
+The options stack combines Black-Scholes-style pricing, implied volatility estimation, cross-strike smile fitting and residual filters. Orders are gated by model edge, liquidity, position limits and stale-signal checks.
+
+Key ideas:
+
+- Black-Scholes call valuation.
+- Implied volatility and volatility-smile fitting.
+- Residual z-score filters.
+- Delta-aware inventory skew.
+- IV carry and stale-signal avoidance.
+- Public-flow features where useful.
+
+### Manual Trading Research
+
+Represented by `research/manual_trading_decision_model.py` and `research/manual_population_simulation.py`.
+
+Manual trading work used technical valuation and decision-distribution reasoning to model how other participants were likely to act under payoff uncertainty.
+
+Key ideas:
+
+- Scenario analysis under incomplete information.
+- Population-level decision simulation.
+- Payoff asymmetry and crowd-behaviour modelling.
+- Regret-style reasoning.
+
+## Tooling
+
+| Tool | Purpose |
+| --- | --- |
+| `tools/backtester/run_backtest.py` | Replays historical Prosperity data against a strategy file defining a `Trader` class. Tracks positions, approximates fills and writes run summaries. |
+| `tools/visualizer/prosperity_visualizer.py` | PySide6/PyQtGraph desktop dashboard for reviewing PnL, fills, own quotes, positions, order-book state and strategy comparisons. |
+| `research/round5_parameter_optimizer.py` | Parameter-search workflow for product-level strategy tuning. |
+| `research/round5_decision_report.py` | Decision/reporting support for comparing strategy variants. |
+
+## Screenshots To Add
+
+Screenshots are intentionally not included yet. The best screenshots for this repo would be:
+
+| Priority | Screenshot | Suggested filename | What it should show |
+| --- | --- | --- | --- |
+| 1 | Visualizer overview | `docs/assets/screenshots/visualizer-overview.png` | Full dashboard with PnL, positions/fills and order-book/quote diagnostics visible. |
+| 2 | Backtester run summary | `docs/assets/screenshots/backtester-run-summary.png` | A clean run summary or comparison table without local file paths or sensitive machine details. |
+| 3 | Strategy comparison | `docs/assets/screenshots/strategy-comparison.png` | Parameter/variant comparison showing how strategies were evaluated. |
+| 4 | Options research | `docs/assets/screenshots/options-volatility-research.png` | Volatility smile, residual or implied-volatility diagnostic plot. |
+
+See `docs/screenshots.md` for capture guidance.
 
 ## Repository Structure
 
@@ -22,32 +106,18 @@ strategies/       Selected final/substantive strategy files.
 research/         Research, optimization and manual-trading analysis scripts.
 tools/backtester/ Custom market replay and execution approximation tool.
 tools/visualizer/ Desktop visualizer for run review and diagnostics.
-docs/             Notes on strategy families and sanitization.
+docs/             Strategy notes, sanitization notes and screenshot plan.
 ```
 
-## Strategy Files
+## Data And Generated Outputs
 
-| File | Focus |
-| --- | --- |
-| `strategies/round3_options_smile_strategy.py` | Black-Scholes pricing, implied volatility, smile fitting, residual filters, Greeks and inventory controls. |
-| `strategies/round4_options_hydrogel_strategy.py` | Expanded options and hydrogel strategy with passive/active execution, signal filtering and risk controls. |
-| `strategies/round5_dynamic_multi_asset_market_maker.py` | Dynamic multi-asset market maker using rolling fair values, warmup regimes, product-level risk pruning and inventory-aware quoting. |
+Historical CSVs, generated run archives, logs, cache files, screenshots, spreadsheets and third-party research copies are intentionally excluded from this public portfolio repository. The goal is to keep the repository readable and focused on strategy design, modelling and research tooling.
 
-## Research Files
+## Status
 
-| File | Focus |
-| --- | --- |
-| `research/options_volatility_research.py` | Options and volatility research. |
-| `research/pca_price_research.py` | PCA-style price research. |
-| `research/hydrogel_signal_research.py` | Signal research for hydrogel-style products. |
-| `research/round5_parameter_optimizer.py` | Parameter search and optimizer workflow. |
-| `research/round5_decision_report.py` | Decision/reporting support for round 5 strategy selection. |
-| `research/manual_trading_decision_model.py` | Manual trading decision model. |
-| `research/manual_population_simulation.py` | Manual trading population simulation. |
+This is a first public sanitized version. Next improvements:
 
-## Tools
-
-- `tools/backtester/run_backtest.py`: replays historical Prosperity data against a strategy file defining a `Trader` class.
-- `tools/visualizer/prosperity_visualizer.py`: PySide6/PyQtGraph desktop dashboard for inspecting runs.
-
-Historical CSVs and generated output folders are excluded from this first public version.
+- Add the screenshots listed above.
+- Add a small anonymized/sample dataset if useful.
+- Clean selected scripts with more consistent docstrings.
+- Add example commands once a small sample dataset is available.
