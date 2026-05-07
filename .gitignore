@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Prosperity generated outputs
+Runs/
+Run Information/
+Temp Runs/
+Temp Strategy Variants/
+Optimizer Reports/
+optimizer_reports/
+Reports/
+Price & Trade Data/
+*.log
+*.zip
+*.out
+*.err
+
+# Data and binary research artifacts
+*.csv
+*.xlsx
+*.xlsm
+*.parquet
+*.pkl
+*.pickle
+
+# Rendered media / screenshots
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.pdf
+
+# Local secrets or machine-specific config
+.env
+*.pem
+*.key
