@@ -21,6 +21,18 @@ I was the team captain and designed the algorithmic and manual strategy stack re
 | Backtester | `tools/backtester/run_backtest.py` | Custom replay engine for historical market data and fill approximation. |
 | Visualizer | `tools/visualizer/prosperity_visualizer.py` | Desktop dashboard for inspecting market replay output, own quotes, fills, positions and PnL. |
 | Manual trading notes | `docs/manual-trading.md` | Public-safe round-by-round summary of the manual trading models and decisions. |
+| Research notes | `docs/research-notes.md` | Short explanation of the modelling philosophy behind the repo. |
+| Runnable demo | `examples/demo_mean_reversion_strategy.py` | Tiny strategy and synthetic market data for exercising the public backtester. |
+
+## Quickstart
+
+The original Prosperity CSVs are intentionally excluded, but this repo includes a small synthetic dataset so the backtester can be run end to end:
+
+```bash
+python tools/backtester/run_backtest.py --strategy examples/demo_mean_reversion_strategy.py --data-dir examples/sample_data --out-dir examples/demo_runs --separate-days
+```
+
+Expected result: the command writes a run archive and JSON summary under `examples/demo_runs/`, with nonzero fills, PnL and risk statistics. Generated demo runs are ignored by git.
 
 ## Research Loop
 
@@ -106,6 +118,7 @@ strategies/       Selected final/substantive strategy files.
 research/         Research, optimization and manual-trading analysis scripts.
 tools/backtester/ Custom market replay and execution approximation tool.
 tools/visualizer/ Desktop visualizer for run review and diagnostics.
+examples/         Tiny synthetic dataset and demo strategy for public backtester verification.
 docs/             Strategy notes, manual trading notes, sanitization notes and screenshots.
 ```
 

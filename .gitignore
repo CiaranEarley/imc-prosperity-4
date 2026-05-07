@@ -28,6 +28,7 @@ Temp Strategy Variants/
 Optimizer Reports/
 optimizer_reports/
 Reports/
+examples/demo_runs/
 Price & Trade Data/
 *.log
 *.zip
@@ -36,6 +37,7 @@ Price & Trade Data/
 
 # Data and binary research artifacts
 *.csv
+!examples/sample_data/*.csv
 *.xlsx
 *.xlsm
 *.parquet
