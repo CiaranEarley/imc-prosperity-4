@@ -1,40 +1,173 @@
 # Manual Trading Notes
 
-Public-safe summary of the manual trading work from IMC Prosperity 4. The original spreadsheets are intentionally excluded from this repository, but each round is represented here with the modelling approach and final decision logic.
+Public-safe summary of my manual trading work from IMC Prosperity 4. The original spreadsheets are intentionally excluded from this repository, but each round is represented here through the modelling approach, decision logic and final choice.
+
+Manual trading was one of the strongest parts of our result: 148th globally, top 0.7%.
 
 ## Round Summary
 
-| Round | Challenge type | Modelled approach | Decision / output |
-| --- | --- | --- | --- |
-| 1 | Auction clearing-price optimisation | Simulated how an added order changed clearing price, queue priority, fill quantity and guaranteed resale profit. | DRYLAND_FLAX: buy at 30, quantity 9,001, clearing price 29, profit 9,001. EMBER_MUSHROOM: buy at 17, quantity 19,001, clearing price 16, profit 74,103.9. |
-| 2 | Manual allocation / risk decision | Modelled Research, Scale and Speed allocations against uninformed and informed population distributions. | This round was treated as a risk-controlled manual decision rather than an algorithmic trading build because qualification was already secured. Chosen allocation: Research 16%, Scale 47%, Speed 37%. The pure model-best allocation was Speed 43%, Scale 42%, Research 15%, but the chosen allocation favoured a lower-risk guaranteed-profit route. |
-| 3 | Two-bid reserve-price problem | Built a reusable decision model for first/second bids, reserve buckets, population average of second bids and penalty-adjusted expected units. | Candidate bid pairs were tested across simulated population scenarios. Robust pairs included 750/835 and 755/840 in central scenarios; 760/850 performed best when the population overbid; 775/880 protected against very high population anchors. |
-| 4 | Aether Crystal options portfolio | Simulated option portfolios using a zero-drift GBM, 251% annual volatility, discrete expiry steps and 100-path score distributions matching the challenge lens. | Preferred Choice 2 or 3 depending on risk appetite. Choice 2 had cleaner lower-tail behaviour; Choice 3 had higher EV while keeping a positive 5th percentile in validation. |
-| 5 | News-driven commodity allocation | Converted qualitative news into direction, severity, confidence, expected price change, fee-adjusted cash and position sizing. | Allocated 71% of capital across the strongest positive and negative news trades, with expected return of about 10.25% in the workbook model. |
+| Round | Challenge type | Final decision | Manual PnL |
+| --- | --- | --- | ---: |
+| 1 | Auction clearing-price optimization | Buy 9,999 DRYLAND_FLAX at 30; buy 19,999 EMBER_MUSHROOM at 17. | 87,995 |
+| 2 | Strategic allocation / qualification risk | Research 23%, Scale 77%, Speed 0%. | 24,233 |
+| 3 | Two-bid reserve-price problem | First bid 791, second bid 856. | 76,707 |
+| 4 | Aether Crystal options portfolio | Strategy 3: EV/drawdown-aware options set. | 35,536 |
+| 5 | News-driven commodity allocation | 71% capital allocation across directional news trades. | 124,594 |
 
-## Selected Details
+## Process
 
-### Round 2 Allocation Model
+The manual rounds were not treated as intuition puzzles. They were quantitative decision problems:
 
-The workbook separated the crowd into uninformed actors, informed frontier actors and later informed actors. It then compared allocation choices against the resulting distribution. The final choice intentionally did not chase the highest displayed model PnL because the strategic objective was to preserve a strong, low-risk outcome after qualification was already secured.
+1. Translate the rules into a payoff function.
+2. Identify what depended only on our action and what depended on the field.
+3. Where the field mattered, model informed, semi-informed and uninformed groups separately.
+4. Compare expected value against lower-tail risk and tournament context.
+5. After each round, review the realized distribution to understand where the model was right or wrong.
 
-### Round 3 Population Simulation
+This post-round review process mattered. It helped distinguish good reasoning that was unlucky from weak assumptions that needed correcting.
 
-The public repository includes:
+## Round 1: Auction Clearing-Price Optimization
 
-- `research/manual_trading_decision_model.py`
-- `research/manual_population_simulation.py`
+The first manual round was a one-shot auction problem on `DRYLAND_FLAX` and `EMBER_MUSHROOM`.
 
-These scripts model reserve capture, penalty-adjusted second-bid value and population-level bid averages. The population simulation stress-tests candidate bid pairs across several behavioural regimes: joint optimizers, single-bid thinkers, overbid-anchored populations, broad/confused populations and high/low skew cases.
+For each product, we submitted one buy order after the existing order book was known. The auction then selected the clearing price that maximized traded volume, with a higher-price tie-break. Because our order was added last, queue position was important: if we joined an existing price level, we were behind all existing demand at that level.
 
-### Round 4 Options Work
+The key insight was that we paid the clearing price, not necessarily our submitted bid. That meant the optimal trade sat just below a threshold where one extra unit would push the clearing price higher and destroy profit.
 
-The manual options model evaluated EV, loss frequency and lower-tail percentiles rather than EV alone. The main trade shape used short binary put exposure hedged with long put downside protection and smaller overlays. This was deliberately framed as a distribution problem because the official scoring sampled a limited number of paths.
+### DRYLAND_FLAX
 
-### Round 5 News Allocation
+- Guaranteed resale price: 30.
+- Base clearing price without our order: 28.
+- Submitting at 30 improved priority versus joining the lower queue.
+- Quantity region 5,000 to 9,999 forced a clearing price of 29 and remained profitable.
+- At 10,000 units, the auction moved to a 30 clearing price, eliminating the margin.
 
-The allocation model used capital, fees and expected price-change assumptions to rank trades. High-conviction examples included a supply-shock scarcity trade, a negative demand/tax-change trade, a smart-home demand-growth trade, a strong negative contamination trade and an index-inclusion demand trade.
+Final order:
+
+| Product | Side | Price | Quantity | Clearing price | Profit/unit | Profit |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| DRYLAND_FLAX | Buy | 30 | 9,999 | 29 | 1.0 | 9,999 |
+
+### EMBER_MUSHROOM
+
+- Guaranteed resale price net of fee: 19.9.
+- Base clearing price without our order: 15.
+- Submitting at 17 improved priority while keeping the clearing price in the profitable band.
+- Quantity region 10,000 to 19,999 forced a clearing price of 16.
+- At 20,000 units, the higher-price tie-break pushed the clearing price up again.
+
+Final order:
+
+| Product | Side | Price | Quantity | Clearing price | Profit/unit | Profit |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| EMBER_MUSHROOM | Buy | 17 | 19,999 | 16 | 3.9 | 77,996.1 |
+
+The logic-based approach was also verified with brute-force checks. Both methods produced the same optimal trade.
+
+## Round 2: Strategic Allocation And Qualification Risk
+
+Round 2 was a budget allocation problem across Research, Scale and Speed.
+
+Research and Scale were functions of our own allocation, while Speed depended on how our Speed choice ranked against the rest of the field. This made the challenge a population-distribution problem rather than a simple static optimization.
+
+The model worked in layers:
+
+- First, optimize Research and Scale assuming a given Speed distribution.
+- Then estimate the distribution of uninformed teams.
+- Then estimate semi-informed teams that would identify a simple best response.
+- Then estimate well-informed teams that would model the previous groups.
+- Finally, choose our allocation against that mixed population.
+
+The pure model produced very strong high-EV choices:
+
+| Candidate | Speed | Scale | Research | Model PnL | Relative to model max |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Best decision | 43% | 42% | 15% | 218,468 | 100.0% |
+| Proposed decision 1 | 37% | 47% | 16% | 208,525 | 95.4% |
+
+However, Round 1 had already put us close to the playoff threshold. The tournament objective was not to maximize Round 2 PnL; it was to reach the finals. I therefore chose a guaranteed-profit allocation:
+
+| Research | Scale | Speed | Result |
+| ---: | ---: | ---: | ---: |
+| 23% | 77% | 0% | 24,233 |
+
+This was deliberately conservative. We also submitted no algorithmic orders in Round 2, so the round became a controlled qualification step rather than an unnecessary risk.
+
+## Round 3: Two-Bid Reserve-Price Problem
+
+Round 3 was another game-theoretic manual problem. The payoff depended on:
+
+- our first bid;
+- our second bid;
+- the distribution of reserve prices;
+- the average second bid across the participant population;
+- the penalty for bidding too aggressively on the second bid.
+
+The model again separated the field into informed and less-informed groups. The spreadsheet evaluated candidate bids under central, lower-than-expected and higher-than-expected population averages. The final decision table stress-tested whether a bid pair still performed acceptably if the crowd was skewed away from our expectation.
+
+Final submission:
+
+| First bid | Second bid |
+| ---: | ---: |
+| 791 | 856 |
+
+The decision was not purely the maximum-return case. It was chosen because it balanced capture probability, missed-opportunity risk and robustness to population skew.
+
+## Round 4: Aether Crystal Options Portfolio
+
+Round 4 was an options-portfolio construction problem. The analysis was much more like a risk book than a single-answer puzzle.
+
+I brute-forced candidate option portfolios, then evaluated them through Monte Carlo and bootstrap-style validation. The decision metric looked at:
+
+- expected PnL;
+- probability of loss;
+- 1st and 5th percentile downside;
+- median result;
+- 95th and 99th percentile upside.
+
+Candidate summary:
+
+| Choice | EV | P(loss) | 1st pct | 5th pct | Median | 95th pct | Verdict |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 1 Conservative | 36,674 | 2.2% | -5,765 | 6,577 | 36,360 | 67,900 | Lowest-loss candidate. |
+| 2 New Middle | 39,760 | 2.7% | -8,403 | 5,517 | 39,399 | 75,277 | Cleaner lower-tail sweet spot. |
+| 3 Improved #3 | 43,266 | 3.5% | -11,253 | 3,778 | 42,653 | 84,864 | Final selected strategy. |
+| 4 Improved #4 | 50,192 | 6.5% | -24,648 | -4,154 | 49,219 | 107,754 | More aggressive; 5th percentile negative. |
+| 5 Balanced | 110,527 | 20.2% | -180,739 | -99,232 | 106,913 | 332,118 | High variance; rejected. |
+
+We chose Strategy 3. It had higher EV than the conservative choices while still keeping the validation 5th percentile positive.
+
+In hindsight, this round had a lot of realized luck in it, and the challenge appeared to reward higher-variance submissions more than our expected-value/lower-tail approach. Still, our decision was consistent with the broader team philosophy: seek positive, repeatable PnL rather than maximizing the lottery-like upside of one round.
+
+## Round 5: News-Driven Commodity Allocation
+
+Round 5 required translating qualitative news into directional trades with position sizing under a fee structure that penalized larger allocations.
+
+The model converted each article into:
+
+- direction: buy or sell;
+- severity of expected price impact;
+- confidence in the interpretation;
+- expected price change;
+- fee-adjusted expected value;
+- optimized position size.
+
+Final allocation:
+
+| Product | Allocation | Direction | Expected change | Expected cash |
+| --- | ---: | --- | ---: | ---: |
+| Obsidian cutlery | 10% | Buy | 20.0% | 10,000 |
+| Pyroflex cells | 11% | Sell | -22.5% | 12,650 |
+| Thermalite core | 11% | Buy | 21.0% | 11,000 |
+| Lava cake | 25% | Sell | -49.5% | 61,250 |
+| Magma ink | 4% | Buy | 8.0% | 1,600 |
+| Scoria paste | 0% | Buy | 0.0% | 0 |
+| Ashes of the Phoenix | 2% | Sell | -4.0% | 400 |
+| Volcanic incense | 0% | Buy | 0.0% | 0 |
+| Sulfur reactor | 8% | Buy | 15.0% | 5,600 |
+
+Total allocation was 71% of capital. The workbook model expected around 10.25% return, and the final realized manual PnL was 124,594.
 
 ## Sanitization
 
-The source workbooks contain rough notes, challenge text, local-only context and binary spreadsheet logic. They remain out of the public repository. This document keeps the clean evidence: round coverage, modelling method and final decision logic.
+The source workbooks contain rough notes, challenge text, local-only context and binary spreadsheet logic. They remain out of the public repository. This document keeps the clean evidence: round coverage, modelling method, final decision logic and realized result.

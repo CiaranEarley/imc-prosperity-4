@@ -8,12 +8,14 @@ For this public portfolio repository:
 - Rough scratch filenames were replaced with descriptive names.
 - Generated artifacts and binary data were excluded.
 - Local machine paths were removed from copied research scripts.
-- The selected source files were otherwise left materially unchanged in the first pass.
+- Larger live strategy files were kept close to the original where practical, while Round 1 and Round 2 were represented by cleaned public files that preserve the important decision logic without carrying over private scratch comments or local-only diagnostics.
 
 Original source mapping:
 
 | Repository path | Original source |
 | --- | --- |
+| `strategies/round1_osmium_pepper_dynamic_strategy.py` | Clean public rewrite based on `Prosperity 4/R1/R1Results/R1Submission.py` |
+| `strategies/round2_no_algo_qualification_risk_control.py` | Clean public representation of the deliberate no-algo Round 2 submission |
 | `strategies/round3_options_smile_strategy.py` | `Prosperity 4/R3/VelvetPCAInsightTester.py` |
 | `strategies/round4_options_hydrogel_strategy.py` | `Prosperity 4/R4/SlingBlade.py` |
 | `strategies/round5_dynamic_multi_asset_market_maker.py` | `Prosperity 4/R5/ColdSteel.py` |

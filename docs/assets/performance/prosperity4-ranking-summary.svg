@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="360" viewBox="0 0 1120 360" role="img" aria-label="IMC Prosperity 4 ranking summary">
+<rect width="1120" height="360" fill="#FFFFFF"/>
+<text x="70" y="58" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0B3155">Final Ranking Summary</text>
+<text x="70" y="88" font-family="Arial, sans-serif" font-size="15" fill="#496377">Official Prosperity 4 result after the finals reset and Rounds 3-5 scoring.</text>
+<rect x="70" y="126" width="230" height="150" rx="10" fill="#EEF2FF" stroke="#D8E0EA"/>
+<text x="94" y="184" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#1D4ED8">343rd</text>
+<text x="94" y="216" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">overall globally</text>
+<text x="94" y="244" font-family="Arial, sans-serif" font-size="14" fill="#5B6B7F">top 1.5%</text>
+<rect x="330" y="126" width="230" height="150" rx="10" fill="#E6F4F1" stroke="#D8E0EA"/>
+<text x="354" y="184" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#155E75">562nd</text>
+<text x="354" y="216" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">algorithmic trading</text>
+<text x="354" y="244" font-family="Arial, sans-serif" font-size="14" fill="#5B6B7F">top 2.5%</text>
+<rect x="590" y="126" width="230" height="150" rx="10" fill="#FFF7ED" stroke="#D8E0EA"/>
+<text x="614" y="184" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#D97706">148th</text>
+<text x="614" y="216" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">manual trading</text>
+<text x="614" y="244" font-family="Arial, sans-serif" font-size="14" fill="#5B6B7F">top 0.7%</text>
+<rect x="850" y="126" width="230" height="150" rx="10" fill="#F8FAFC" stroke="#D8E0EA"/>
+<text x="874" y="184" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#334155">7th</text>
+<text x="874" y="216" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Singapore</text>
+<text x="874" y="244" font-family="Arial, sans-serif" font-size="14" fill="#5B6B7F">competitive trading hub</text>
+<text x="70" y="318" font-family="Arial, sans-serif" font-size="12" fill="#6B7280">Manual trading was the strongest relative finish; the algorithmic stack prioritised robust dynamic logic over fixed-price hardcoding.</text>
+</svg>

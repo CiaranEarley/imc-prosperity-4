@@ -1,56 +1,135 @@
 # Strategy Summary
 
-## Dynamic Multi-Asset Market Making
+This repository presents a public-safe version of my IMC Prosperity 4 algorithmic work. The common thread is dynamic modelling: estimate fair value from current market state and recent history, then trade only when model edge, liquidity and inventory constraints justify the risk.
+
+## Why Dynamic Rather Than Hardcoded
+
+Many Prosperity strategies can perform extremely well by identifying fixed historical anchors and optimizing aggressively around them. I deliberately avoided making fixed prices the core of the strategy stack.
+
+The reason was risk. A hardcoded level can look brilliant in-sample and fail badly if the simulator changes regime. My preference was to accept lower PnL in exchange for logic that recalculated fair value during the run.
+
+## Round 1: Osmium And Pepper Root
+
+Represented by `strategies/round1_osmium_pepper_dynamic_strategy.py`.
+
+Round 1 traded:
+
+- `ASH_COATED_OSMIUM`
+- `INTARIAN_PEPPER_ROOT`
+
+### Ash-Coated Osmium
+
+The Osmium model used:
+
+- rolling short and long mid-price history;
+- order-book mid and imbalance;
+- z-score adjustment against recent history;
+- a centre-pull term to avoid drifting too far from observed fair value;
+- volatility-adaptive quote width and size;
+- inventory-skewed passive orders;
+- flattening logic when inventory became too large.
+
+This behaved like an inventory-aware market maker with live fair-value estimation. The strategy could take attractive liquidity when the book was mispriced and then provide passive quotes when edge was sufficient.
+
+### Intarian Pepper Root
+
+Pepper Root behaved more like a drifting product. The model estimated:
+
+- rolling regression slope;
+- regression fit quality;
+- drift regime;
+- fair value implied by the current tick;
+- book-level signals.
+
+Execution combined a core target position with smaller overlays when the book offered attractive prices versus the live regression fair value.
+
+## Round 2: No Algorithmic Trade
+
+Represented by `strategies/round2_no_algo_qualification_risk_control.py`.
+
+Round 2 was not a strategy failure or a missing file. It was a deliberate tournament decision.
+
+After Round 1, the team was close enough to the 200k qualification threshold that the right decision was to avoid unnecessary algorithmic risk. The Round 2 strategy therefore returned no orders, while the manual submission locked in enough additional PnL to reach the finals.
+
+## Round 3: Options And Volatility Smile
+
+Represented by `strategies/round3_options_smile_strategy.py`.
+
+Round 3 introduced `VELVETFRUIT_EXTRACT` and a strip of call options. The strategy used:
+
+- Black-Scholes-style call valuation;
+- implied volatility estimation;
+- weighted quadratic volatility-smile fitting;
+- leave-one-out fair-value checks;
+- residual z-score filters;
+- IV carry signals;
+- delta-aware inventory skew;
+- passive market making where spreads and fair values justified it;
+- microstructure scalp logic on selected strikes.
+
+The strategy was hurt live by a production-style issue: research/log payloads exceeded the official character limit, which stopped quotes from reaching the platform after a point. That diagnosis materially shaped the Round 4 cleanup.
+
+## Round 4: Hydrogel And Expanded Options
+
+Represented by `strategies/round4_options_hydrogel_strategy.py`.
+
+Round 4 kept the options stack and added `HYDROGEL_PACK`.
+
+Hydrogel logic included:
+
+- adaptive lower/upper levels around a rolling centre;
+- tiered inventory targets at extremes;
+- passive quoting near model value;
+- active sweeping only when edge and target inventory justified it;
+- recycling and trimming logic after retracements;
+- named-counterparty/public-flow features where they survived testing.
+
+The options strategy also became more production-safe after Round 3:
+
+- reduced logging risk;
+- stronger gating around stale signals;
+- public-flow fade features;
+- Mark/counterparty signal handling;
+- underlying mean-reversion and call-bias overlays;
+- continued residual and IV-based option execution.
+
+## Round 5: Dynamic Multi-Asset Market Maker
 
 Represented by `strategies/round5_dynamic_multi_asset_market_maker.py`.
 
-The round 5 strategy uses product-level configuration, rolling fair values, warmup regimes and inventory-aware quote placement. The aim was to avoid brittle absolute price anchors and instead let live book state and rolling estimates drive bid/ask placement.
+Round 5 expanded the tradable universe dramatically. The final strategy deliberately avoided overcomplicated cross-family structures unless they survived validation.
 
-Core ideas:
+The production stack used:
 
-- EMA-style fair-value estimation across product families.
-- Product-specific spread, edge, size and soft-limit controls.
-- Passive quoting with selective active overlays.
-- Warmup logic to reduce early-regime overfitting.
-- Position and drawdown-aware pruning of product configurations.
+- rolling EMA fair values across multiple windows;
+- product-level modes: `fair`, `touch` and `off`;
+- warmup regimes before long-window estimates were trusted;
+- soft and hard position limits;
+- inventory-scaled sizing;
+- trend filters on selected product families;
+- active overlays only where the signal justified taking liquidity;
+- product pruning after official replay and post-run diagnostics.
 
-## Options And Volatility Modelling
-
-Represented by `strategies/round3_options_smile_strategy.py`, `strategies/round4_options_hydrogel_strategy.py` and `research/options_volatility_research.py`.
-
-The options stack models option fair value through Black-Scholes-style pricing, implied volatility estimation and volatility-smile residuals. Trading decisions combine model edge, liquidity, residual filters and position limits.
-
-Core ideas:
-
-- Black-Scholes call pricing.
-- Implied volatility estimation.
-- Cross-strike volatility smile fitting.
-- Residual z-score filters.
-- Greeks and delta-aware inventory skew.
-- IV carry and stale-signal avoidance.
-- Public-flow features where useful.
-
-## Manual Trading Research
-
-Represented by `research/manual_trading_decision_model.py` and `research/manual_population_simulation.py`.
-
-Manual trading work used technical valuation and decision-distribution reasoning to model how other participants were likely to act under payoff uncertainty.
-
-Core ideas:
-
-- Scenario analysis under incomplete information.
-- Population-level decision simulation.
-- Regret-style reasoning.
-- Payoff asymmetry and crowd-behaviour modelling.
+The result was a broad, controlled market-making strategy rather than a brittle map of exact historical prices.
 
 ## Research Infrastructure
 
-Represented by `tools/backtester/run_backtest.py` and `tools/visualizer/prosperity_visualizer.py`.
+Represented by:
 
-The backtester and visualizer supported a faster research loop:
+- `tools/backtester/run_backtest.py`
+- `tools/visualizer/prosperity_visualizer.py`
+- `research/round5_parameter_optimizer.py`
+- `research/round5_decision_report.py`
 
-- Replay historical market data.
-- Approximate active/passive fills.
-- Track PnL, positions and fills.
-- Compare variants and parameter sweeps.
-- Inspect own quotes against market state.
+The tooling supported:
+
+- market replay;
+- fill approximation;
+- PnL and inventory tracking;
+- quote/fill visualization;
+- product-level diagnostics;
+- strategy comparison;
+- parameter sweeps;
+- post-round error analysis.
+
+The visualizer and backtester will eventually have their own dedicated repositories. They remain referenced here because they were central to the actual research loop.
