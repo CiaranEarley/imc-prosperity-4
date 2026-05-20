@@ -51,6 +51,8 @@ The options work focused on model value rather than directional guessing. The re
 - delta and vega diagnostics;
 - public-flow and counterparty signal analysis where relevant.
 
+Further post-round work showed that IV mispricing residuals were themselves mean-reverting. That was a strong research finding, but it was discovered too late to safely fold into the live Round 3 code.
+
 The Round 3 result was hurt by a live execution issue: the research/log payload exceeded the official platform's character limit and interfered with quote submission. That post-round diagnosis directly improved the Round 4 production setup.
 
 ## Round 5 Search-Space Control

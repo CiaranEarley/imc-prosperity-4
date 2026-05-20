@@ -1,6 +1,12 @@
-# IMC Prosperity 4 Trading Portfolio
+# IMC Prosperity 4 Trading Challenge
 
 Selected strategy, research and tooling files from my IMC Prosperity 4 competition work.
+
+IMC Prosperity 4 (2026) was a global quantitative trading competition held over five rounds across a two-week period, with more than 30,000 students and more than 22,000 registered teams participating worldwide.
+
+Participants built trading algorithms to maximize profit in simulated securities and commodities markets populated by bots, market frictions and hidden behavioural patterns. Across the competition, new products, mechanics and sources of market structure were introduced each round, requiring teams to continuously adapt their strategies, models and research workflows. In total, 64 products were traded throughout the competition, with 50 active in the final round alone.
+
+Each round also included a separate manual trading challenge focused on probabilistic reasoning, optimization and strategic decision-making in uncertain, adversarial environments. The competition covered market making, statistical arbitrage, microstructure analysis, derivatives pricing, signal extraction, event-driven trading, optimization, simulation and game theory.
 
 I captained a four-person team and personally designed the algorithmic strategies, manual models, research tooling and final trading decisions. We finished:
 
@@ -74,7 +80,7 @@ After a strong Round 1, we treated Round 2 as a qualification risk-control probl
 | --- | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | Qualification | 87,995 | 98,618 | 186,613 | 625 | Dynamic market making plus auction optimization. |
 | 2 | Qualification | 24,233 | 0 | 210,846 | 3,927 | No algorithmic risk; guaranteed-profit manual allocation to qualify. |
-| 3 | Finals reset | 76,707 | 19,368 | 96,075 | 1,171 | Options strategy; live logging/character-limit issue hurt execution. |
+| 3 | Finals reset | 76,707 | 19,368 | 96,075 | 1,171 | Hydrogel and options strategy; live logging/character-limit issue hurt execution. |
 | 4 | Finals | 35,536 | 72,480 | 204,090 | 721 | Hydrogel structural model plus options; risk-aware manual options book. |
 | 5 | Finals | 124,594 | 57,344 | 386,028 | 343 | Broad multi-asset market making plus news-driven manual allocation. |
 
@@ -86,7 +92,7 @@ After a strong Round 1, we treated Round 2 as a qualification risk-control probl
 | --- | --- | --- |
 | Round 1 strategy | `strategies/round1_osmium_pepper_dynamic_strategy.py` | Dynamic fair-value and market-making strategy for Ash-Coated Osmium and Intarian Pepper Root. |
 | Round 2 risk decision | `strategies/round2_no_algo_qualification_risk_control.py` | Explicit no-trade algorithmic submission after qualification was effectively secured. |
-| Round 3 options strategy | `strategies/round3_options_smile_strategy.py` | Options strategy using Black-Scholes valuation, implied volatility, smile fitting and residual filters. |
+| Round 3 options strategy | `strategies/round3_options_smile_strategy.py` | Public-safe options and Velvetfruit strategy using Black-Scholes valuation, implied volatility, smile fitting and residual filters; the private Round 3 stack also included Hydrogel structural trading. |
 | Round 4 strategy | `strategies/round4_options_hydrogel_strategy.py` | Hydrogel and options strategy using adaptive levels, public-flow features and volatility modelling. |
 | Round 5 strategy | `strategies/round5_dynamic_multi_asset_market_maker.py` | Dynamic multi-asset market maker using rolling fair values, product risk controls and inventory-aware quoting. |
 | Manual trading notes | `docs/manual-trading.md` | Workbook-derived explanation of each manual challenge and final choice. |
@@ -147,7 +153,9 @@ The modelling process was:
 4. Estimate well-informed teams that would model the previous groups.
 5. Choose against the mixed population distribution.
 
-The model found much higher-EV allocations than the one we submitted. The best decision was roughly 43% Speed / 42% Scale / 15% Research, while another proposed decision produced about 95% of the model maximum. But neither was needed for qualification.
+The model found much higher-EV allocations than the one we submitted. The best decision possible was 43% Speed / 42% Scale / 15% Research. Our model made a proposed decision which produced just over 95% of the maximum PnL obtainable. But it was not needed for qualification.
+
+![Round 2 speed distribution modelling](docs/assets/manual/round2-speed-distribution.svg)
 
 ![Round 2 allocation distribution](docs/assets/manual/round2-allocation-distribution.svg)
 
@@ -159,11 +167,15 @@ Final submission:
 
 The final allocation was a deliberately conservative guaranteed-profit choice. It advanced us to the finals without exposing the team to unnecessary playoff risk.
 
-## Round 3: Options Smile Research, Execution Lesson And Two-Bid Game Theory
+## Round 3: Hydrogel, Options Smile Research, Execution Lesson And Two-Bid Game Theory
 
 ### Algorithmic Challenge
 
-Round 3 introduced `VELVETFRUIT_EXTRACT` and options across multiple strikes. The strategy was built as a volatility-surface and residual-trading system rather than a simple directional bot.
+Round 3 traded `HYDROGEL_PACK`, `VELVETFRUIT_EXTRACT` and options across multiple `VELVETFRUIT_EXTRACT` strikes. The strategy was built as a set of sleeves rather than one monolithic predictor: Hydrogel structural market making, Velvetfruit fair-value estimation, options valuation, residual trading and controlled passive quoting.
+
+The Hydrogel sleeve was a continuation of the dynamic/non-hardcoded philosophy. The private Round 3 strategy used structural lower and upper regions as risk landmarks, but still recalculated execution fair value from order-book state and recent history. It used an anchor centre, tiered inventory targets near extremes, passive quote gates and active sweeps only when the edge and target inventory justified it.
+
+`VELVETFRUIT_EXTRACT` mattered both as a tradeable product and as the underlying for the options book. I used it to form a live spot estimate for Black-Scholes valuation, delta exposure and residual diagnostics. Where the spread and fair value justified it, the strategy could also quote the underlying directly, but the bigger research focus was the options surface.
 
 The research stack used:
 
@@ -173,11 +185,17 @@ The research stack used:
 - leave-one-out checks so each option was not valued by a model overly dependent on itself;
 - residual and z-score filters before trading a mispriced contract;
 - delta-aware inventory skew so the options book did not accidentally become a large underlying bet;
+- dynamic sizing based on edge, spread and residual strength;
+- passive market making on selected contracts when the spread justified inventory risk;
+- active residual trades where model edge was large enough to cross the spread;
+- zero-bid lottery logic on far out-of-the-money options;
 - microstructure scalp logic only where book state and residual evidence agreed.
 
 The options-smile chart above is the kind of structure I was trying to trade. The aim was not to decide that one option price was cheap in isolation; it was to infer the live volatility surface, compare each option against the surface, and only trade residuals that were large enough after spread, inventory and signal-quality checks.
 
-The strategy had several layers: passive market making around model fair value, active residual trades when the option looked mispriced, small zero-bid lottery logic on far strikes, IV carry logic, and underlying rebalancing.
+Further post-round research showed an even stronger pattern: the IV mispricings themselves were mean-reverting. That was exactly the type of signal the residual framework was meant to detect, but the fully developed residual mean-reversion version came too late to add safely into the live Round 3 code.
+
+The strategy had several layers: Hydrogel structural trading, passive options market making around model fair value, active residual trades when the option looked mispriced, small zero-bid lottery logic on far strikes, IV carry logic and underlying exposure control.
 
 The live result was hurt by a production-style issue. My research/logging payload exceeded the platform character limit during the official run, which interfered with quote submission. I only diagnosed this properly in Round 4 while reviewing Round 3 performance. The lesson was blunt but valuable: instrumentation must never be allowed to interfere with execution.
 
@@ -220,6 +238,10 @@ Key components:
 - dynamic low detection using recent history, standard deviation and bounce checks;
 - public-flow and named-counterparty features where they were useful;
 - the Round 3 options stack, but with reduced logging and safer production behaviour.
+
+Round 4 also added named-counterparty information. I researched this and built small signal overlays rather than letting it dominate the strategy. In Hydrogel, `Mark 38` trades were tracked as a short-lived directional bias, with extra passive size only when the signal appeared near useful parts of the recent price distribution. In the options book, `Mark 22` selling and `Mark 01` buying were tested as out-of-the-money call signals, while `Mark 14` and `Mark 67` activity in the underlying were tested as call-bias inputs for selected strikes.
+
+These counterparty signals were interesting but not especially effective as standalone alpha. I treated them as small biases layered on top of the structural Hydrogel model and the options residual model, not as signals strong enough to override price, spread, edge and inventory constraints.
 
 This round was where post-round diagnosis mattered. The Round 3 character-limit issue was identified, the logging surface was reduced and the strategy became more production-safe.
 

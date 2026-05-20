@@ -87,6 +87,8 @@ The pure model produced very strong high-EV choices:
 | Best decision | 43% | 42% | 15% | 218,468 | 100.0% |
 | Proposed decision 1 | 37% | 47% | 16% | 208,525 | 95.4% |
 
+![Round 2 speed distribution modelling](assets/manual/round2-speed-distribution.svg)
+
 ![Round 2 allocation distribution](assets/manual/round2-allocation-distribution.svg)
 
 However, Round 1 had already put us close to the playoff threshold. The tournament objective was not to maximize Round 2 PnL; it was to reach the finals. I therefore chose a guaranteed-profit allocation:

@@ -51,11 +51,13 @@ Round 2 was not a strategy failure or a missing file. It was a deliberate tourna
 
 After Round 1, the team was close enough to the 200k qualification threshold that the right decision was to avoid unnecessary algorithmic risk. The Round 2 strategy therefore returned no orders, while the manual submission locked in enough additional PnL to reach the finals.
 
-## Round 3: Options And Volatility Smile
+## Round 3: Hydrogel, Options And Volatility Smile
 
 Represented by `strategies/round3_options_smile_strategy.py`.
 
-Round 3 introduced `VELVETFRUIT_EXTRACT` and a strip of call options. The strategy used:
+Round 3 introduced `HYDROGEL_PACK`, `VELVETFRUIT_EXTRACT` and a strip of call options. The public strategy file focuses on the options and Velvetfruit stack; the private competition stack also included a Hydrogel sleeve with structural lower/upper levels, tiered inventory targets and live fair-value gating.
+
+The options strategy used:
 
 - Black-Scholes-style call valuation;
 - implied volatility estimation;
@@ -66,6 +68,8 @@ Round 3 introduced `VELVETFRUIT_EXTRACT` and a strip of call options. The strate
 - delta-aware inventory skew;
 - passive market making where spreads and fair values justified it;
 - microstructure scalp logic on selected strikes.
+
+Further post-round research showed that option IV mispricing residuals were themselves mean-reverting. The strategy already had residual diagnostics, but the fully developed residual mean-reversion trade arrived too late to add safely into the live Round 3 submission.
 
 The strategy was hurt live by a production-style issue: research/log payloads exceeded the official character limit, which stopped quotes from reaching the platform after a point. That diagnosis materially shaped the Round 4 cleanup.
 
@@ -92,6 +96,8 @@ The options strategy also became more production-safe after Round 3:
 - Mark/counterparty signal handling;
 - underlying mean-reversion and call-bias overlays;
 - continued residual and IV-based option execution.
+
+The counterparty work was exploratory. `Mark 38` was tested as a Hydrogel bias near useful price regions, while selected option and underlying Marks were tested as call-bias signals. These signals were not strong enough to drive the strategy alone, so they were kept as small overlays behind price, edge and inventory controls.
 
 ## Round 5: Dynamic Multi-Asset Market Maker
 
