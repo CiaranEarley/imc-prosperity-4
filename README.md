@@ -21,6 +21,40 @@ A lot of successful Prosperity strategies can be built by identifying historical
 
 That philosophy is the reason this repository emphasizes research process and risk judgement as much as final PnL.
 
+## Research Tooling
+
+Before discussing the individual rounds, it is worth showing the research loop. I built a custom backtester and visualizer from scratch because the hardest part of the challenge was not writing one strategy file; it was understanding why a strategy made or lost money under replay.
+
+The workflow was:
+
+1. Load official price and trade CSVs.
+2. Replay the market locally through the same `Trader` interface used by the competition.
+3. Approximate fills, PnL, inventory, quotes and order-book state.
+4. Compare strategy variants over full runs and rolling windows.
+5. Inspect the run visually, diagnose failures and decide what should be simplified, pruned or rebuilt.
+
+The tooling supported local market replay, simulated fills, PnL and inventory tracking, own quote/fill inspection, strategy comparison, parameter sweeps and post-round diagnostics. The visualizer and backtester will eventually live in their own dedicated repositories, but this repository includes representative code and screenshots because they were central to the actual research process.
+
+![Visualizer overview](docs/assets/screenshots/visualizer-overview.jpg)
+
+![Normalized quote inspection](docs/assets/screenshots/visualizer-normalized-quotes.jpg)
+
+![Risk diagnostics](docs/assets/screenshots/visualizer-risk.jpg)
+
+Additional screenshots and capture notes are in `docs/screenshots.md`.
+
+## Market Structure Snapshots
+
+The following charts were generated from the official price CSVs in my private competition workspace. The raw CSVs are intentionally excluded from this public repository, but these derived visuals help explain the market structure the strategies were built around.
+
+![Round 1 product price paths](docs/assets/market/round1-product-price-paths.svg)
+
+![Round 4 Hydrogel structural range](docs/assets/market/round4-hydrogel-structure.svg)
+
+![Round 3 and Round 4 options smile diagnostics](docs/assets/market/options-smile-snapshots.svg)
+
+![Round 5 multi-asset universe map](docs/assets/market/round5-universe-map.svg)
+
 ## Competition Structure
 
 Prosperity 4 had two phases:
@@ -66,6 +100,8 @@ After a strong Round 1, we treated Round 2 as a qualification risk-control probl
 ### Algorithmic Challenge
 
 Round 1 traded `ASH_COATED_OSMIUM` and `INTARIAN_PEPPER_ROOT`.
+
+The Round 1 price chart above shows why I separated the products rather than using one generic market-making template. Osmium mostly behaved like a centre-pull product with short bursts away from fair value, while Pepper Root had a cleaner directional drift component. That split drove the code structure: one strategy was primarily inventory-aware market making around a live centre, the other leaned more heavily on rolling regression and drift-regime classification.
 
 `ASH_COATED_OSMIUM` behaved like a market-making problem around a live centre. The strategy estimated fair value from a blend of short/long rolling history, order-book mid, order-book imbalance and a pull back toward the observed centre. It then combined two execution modes:
 
@@ -139,9 +175,11 @@ The research stack used:
 - delta-aware inventory skew so the options book did not accidentally become a large underlying bet;
 - microstructure scalp logic only where book state and residual evidence agreed.
 
+The options-smile chart above is the kind of structure I was trying to trade. The aim was not to decide that one option price was cheap in isolation; it was to infer the live volatility surface, compare each option against the surface, and only trade residuals that were large enough after spread, inventory and signal-quality checks.
+
 The strategy had several layers: passive market making around model fair value, active residual trades when the option looked mispriced, small zero-bid lottery logic on far strikes, IV carry logic, and underlying rebalancing.
 
-The live result was hurt by a production-style issue. My research/logging payload exceeded the platform character limit during the official run, which interfered with quote submission. I only diagnosed this properly while reviewing Round 4 performance. The lesson was blunt but valuable: instrumentation must never be allowed to interfere with execution.
+The live result was hurt by a production-style issue. My research/logging payload exceeded the platform character limit during the official run, which interfered with quote submission. I only diagnosed this properly in Round 4 while reviewing Round 3 performance. The lesson was blunt but valuable: instrumentation must never be allowed to interfere with execution.
 
 ### Manual Challenge
 
@@ -169,6 +207,8 @@ The final pair was chosen because it balanced capture probability and robustness
 ### Algorithmic Challenge
 
 Round 4 retained the options universe and added `HYDROGEL_PACK`.
+
+The Hydrogel chart above shows the structure I was exploiting. I used lower, centre and upper structural levels as risk landmarks, but the strategy still recalculated execution fair value from live order-book information and recent history. The levels told the bot when the market was becoming interesting; they were not a complete substitute for live pricing.
 
 The hydrogel model was built around adaptive structural levels rather than a single hardcoded fair value. The strategy maintained an anchor centre, lower/upper extremes, tiered target positions near those extremes and a live signal fair value constructed from wall mid, top-of-book mid and recent anchor history. It traded actively near structural extremes and passively when the quoted edge was large enough.
 
@@ -218,6 +258,10 @@ In hindsight, this round had a large realized-luck component and high-variance s
 
 Round 5 expanded the universe dramatically. The final strategy was a broad dynamic market maker with product-specific modes.
 
+The universe map and selected price-path chart show why Round 5 needed product-level decisions. Some products had strong directional moves, some had wide ranges without useful replay behaviour, and some were stable enough for touch-quoting. The strategy therefore treated inclusion as a research decision rather than assuming every listed product deserved capital.
+
+![Round 5 selected product price paths](docs/assets/market/round5-selected-price-paths.svg)
+
 Each product was assigned a mode:
 
 - `fair`: quote only when attractive versus a live EMA fair value;
@@ -245,34 +289,6 @@ The model converted each article into:
 ![Round 5 news allocation](docs/assets/manual/round5-news-allocation.svg)
 
 Final allocation was 71% of capital. The workbook expected about 10.25% return, and the realized manual PnL was 124,594.
-
-## Research Tooling
-
-I built a custom backtester and visualizer from scratch to shorten the research loop. These will eventually live in their own dedicated repositories, but this repo includes representative code and screenshots.
-
-The tools supported:
-
-- local market replay;
-- simulated fills;
-- PnL and inventory tracking;
-- own quote/fill inspection;
-- strategy comparison;
-- parameter sweeps;
-- post-round diagnostics.
-
-![Visualizer overview](docs/assets/screenshots/visualizer-overview.jpg)
-
-![Normalized quote inspection](docs/assets/screenshots/visualizer-normalized-quotes.jpg)
-
-![Inventory tracking](docs/assets/screenshots/visualizer-inventory.jpg)
-
-![Risk diagnostics](docs/assets/screenshots/visualizer-risk.jpg)
-
-![Spread inspection](docs/assets/screenshots/visualizer-spreads.jpg)
-
-![Run statistics](docs/assets/screenshots/visualizer-statistics.jpg)
-
-Additional screenshots and capture notes are in `docs/screenshots.md`.
 
 ## Quickstart
 
