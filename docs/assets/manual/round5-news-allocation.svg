@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="670" viewBox="0 0 1160 670" role="img" aria-label="Round 5 news allocation">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0B3A5B" text-anchor="start" >Round 5 Manual: News-to-Position Model</text>
+<text x="70" y="80" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677A" text-anchor="start" >News articles were translated into direction, severity, confidence and fee-aware position size.</text>
+<line x1="210.0" y1="120" x2="210.0" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="210.0" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >0</text>
+<line x1="356.66666666666663" y1="120" x2="356.66666666666663" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="356.66666666666663" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >15,000</text>
+<line x1="503.3333333333333" y1="120" x2="503.3333333333333" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="503.3333333333333" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >30,000</text>
+<line x1="650.0" y1="120" x2="650.0" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="650.0" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >45,000</text>
+<line x1="796.6666666666666" y1="120" x2="796.6666666666666" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="796.6666666666666" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >60,000</text>
+<line x1="943.3333333333334" y1="120" x2="943.3333333333334" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="943.3333333333334" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >75,000</text>
+<line x1="1090.0" y1="120" x2="1090.0" y2="515" stroke="#D9E4EC" stroke-width="1"/>
+<text x="1090.0" y="543" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >90,000</text>
+<text x="196" y="143" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Obsidian cutlery</text>
+<rect x="210" y="120" width="97.77777777777777" height="34" rx="4" fill="#16805B" stroke="none" />
+<text x="315.77777777777777" y="143" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Buy 10% | expected cash 10,000</text>
+<text x="196" y="195" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Pyroflex cells</text>
+<rect x="210" y="172" width="123.68888888888888" height="34" rx="4" fill="#B42318" stroke="none" />
+<text x="341.68888888888887" y="195" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Sell 11% | expected cash 12,650</text>
+<text x="196" y="247" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Thermalite core</text>
+<rect x="210" y="224" width="107.55555555555556" height="34" rx="4" fill="#16805B" stroke="none" />
+<text x="325.55555555555554" y="247" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Buy 11% | expected cash 11,000</text>
+<text x="196" y="299" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Lava cake</text>
+<rect x="210" y="276" width="598.8888888888889" height="34" rx="4" fill="#B42318" stroke="none" />
+<text x="816.8888888888889" y="299" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Sell 25% | expected cash 61,250</text>
+<text x="196" y="351" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Magma ink</text>
+<rect x="210" y="328" width="15.644444444444444" height="34" rx="4" fill="#16805B" stroke="none" />
+<text x="233.64444444444445" y="351" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Buy 4% | expected cash 1,600</text>
+<text x="196" y="403" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Ashes of the Phoenix</text>
+<rect x="210" y="380" width="3.911111111111111" height="34" rx="4" fill="#B42318" stroke="none" />
+<text x="221.9111111111111" y="403" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Sell 2% | expected cash 400</text>
+<text x="196" y="455" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="end" >Sulfur reactor</text>
+<rect x="210" y="432" width="54.75555555555555" height="34" rx="4" fill="#16805B" stroke="none" />
+<text x="272.75555555555553" y="455" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Buy 8% | expected cash 5,600</text>
+<line x1="210" y1="515" x2="1090" y2="515" stroke="#0B3A5B" stroke-width="1.5"/>
+<text x="650.0" y="575" font-family="Arial, sans-serif" font-size="14" font-weight="400" fill="#52677A" text-anchor="middle" >Fee-adjusted expected cash contribution</text>
+<text x="70" y="605" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#0B3A5B" text-anchor="start" >Total allocation: 71% of capital. Workbook expected return: 10.25%. Realized manual PnL: 124,594.</text>
+</svg>

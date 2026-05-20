@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1150" height="610" viewBox="0 0 1150 610" role="img" aria-label="Round 1 auction threshold logic">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0B3A5B" text-anchor="start" >Round 1 Manual: Auction Threshold Logic</text>
+<text x="70" y="80" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677A" text-anchor="start" >The optimal order was just below the quantity threshold where the clearing price jumped and destroyed marginal profit.</text>
+<rect x="70" y="125" width="485" height="370" rx="8" fill="#FBFDFF" stroke="#D2E0EA" />
+<text x="94" y="160" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#0B3A5B" text-anchor="start" >DRYLAND_FLAX</text>
+<text x="94" y="187" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Final: buy 9,999; clearing 29; profit/unit 1; profit 9,999</text>
+<line x1="110" y1="370" x2="515" y2="370" stroke="#0B3A5B" stroke-width="1.5"/>
+<rect x="110.0" y="298" width="144.61392857142857" height="64" rx="3" fill="#EAF3FB" stroke="none" />
+<text x="182.3069642857143" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >lower fill</text>
+<text x="182.3069642857143" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >less volume</text>
+<rect x="254.64285714285714" y="298" width="144.61392857142857" height="64" rx="3" fill="#DFF4EA" stroke="none" />
+<text x="326.94982142857145" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >best band</text>
+<text x="326.94982142857145" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >clearing 29</text>
+<rect x="399.2857142857143" y="298" width="115.71428571428571" height="64" rx="3" fill="#FCE7E7" stroke="none" />
+<text x="457.1428571428571" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >threshold breach</text>
+<text x="457.1428571428571" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >clearing 30, margin 0</text>
+<line x1="399.2567857142857" y1="270" x2="399.2567857142857" y2="395" stroke="#16805B" stroke-width="2"/>
+<circle cx="399.2567857142857" cy="298" r="5" fill="#16805B" stroke="none" stroke-width="1"/>
+<text x="399.2567857142857" y="415" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#16805B" text-anchor="middle" >9,999</text>
+<text x="110" y="415" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >0</text>
+<text x="515" y="415" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >14,000</text>
+<text x="94" y="440" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#0B3A5B" text-anchor="start" >Decision logic</text>
+<text x="94" y="465" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Pay clearing price, not bid; stop before the price jump.</text>
+<rect x="615" y="125" width="485" height="370" rx="8" fill="#FBFDFF" stroke="#D2E0EA" />
+<text x="639" y="160" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#0B3A5B" text-anchor="start" >EMBER_MUSHROOM</text>
+<text x="639" y="187" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Final: buy 19,999; clearing 16; profit/unit 3.9; profit 77,996</text>
+<line x1="655" y1="370" x2="1060" y2="370" stroke="#0B3A5B" stroke-width="1.5"/>
+<rect x="655.0" y="298" width="155.75365384615387" height="64" rx="3" fill="#EAF3FB" stroke="none" />
+<text x="732.8768269230769" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >lower fill</text>
+<text x="732.8768269230769" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >less volume</text>
+<rect x="810.7692307692307" y="298" width="155.75365384615387" height="64" rx="3" fill="#DFF4EA" stroke="none" />
+<text x="888.6460576923076" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >best band</text>
+<text x="888.6460576923076" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >clearing 16</text>
+<rect x="966.5384615384615" y="298" width="93.46153846153847" height="64" rx="3" fill="#FCE7E7" stroke="none" />
+<text x="1013.2692307692308" y="328" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#102033" text-anchor="middle" >threshold breach</text>
+<text x="1013.2692307692308" y="348" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >clearing 17, weaker EV</text>
+<line x1="966.5228846153846" y1="270" x2="966.5228846153846" y2="395" stroke="#16805B" stroke-width="2"/>
+<circle cx="966.5228846153846" cy="298" r="5" fill="#16805B" stroke="none" stroke-width="1"/>
+<text x="966.5228846153846" y="415" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#16805B" text-anchor="middle" >19,999</text>
+<text x="655" y="415" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >0</text>
+<text x="1060" y="415" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="middle" >26,000</text>
+<text x="639" y="440" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#0B3A5B" text-anchor="start" >Decision logic</text>
+<text x="639" y="465" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >Pay clearing price, not bid; stop before the price jump.</text>
+</svg>

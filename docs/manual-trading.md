@@ -1,14 +1,14 @@
 # Manual Trading Notes
 
-Public-safe summary of my manual trading work from IMC Prosperity 4. The original spreadsheets are intentionally excluded from this repository, but each round is represented here through the modelling approach, decision logic and final choice.
+Public-safe summary of my manual trading work from IMC Prosperity 4. The original spreadsheets are intentionally excluded from this repository, but the modelling approach, final decisions and workbook-derived summary visuals are included here.
 
-Manual trading was one of the strongest parts of our result: 148th globally, top 0.7%.
+Manual trading was one of the strongest parts of the run: 148th globally, top 0.7%.
 
 ## Round Summary
 
 | Round | Challenge type | Final decision | Manual PnL |
 | --- | --- | --- | ---: |
-| 1 | Auction clearing-price optimization | Buy 9,999 DRYLAND_FLAX at 30; buy 19,999 EMBER_MUSHROOM at 17. | 87,995 |
+| 1 | Auction clearing-price optimization | Buy 9,999 `DRYLAND_FLAX` at 30; buy 19,999 `EMBER_MUSHROOM` at 17. | 87,995 |
 | 2 | Strategic allocation / qualification risk | Research 23%, Scale 77%, Speed 0%. | 24,233 |
 | 3 | Two-bid reserve-price problem | First bid 791, second bid 856. | 76,707 |
 | 4 | Aether Crystal options portfolio | Strategy 3: EV/drawdown-aware options set. | 35,536 |
@@ -22,7 +22,7 @@ The manual rounds were not treated as intuition puzzles. They were quantitative 
 2. Identify what depended only on our action and what depended on the field.
 3. Where the field mattered, model informed, semi-informed and uninformed groups separately.
 4. Compare expected value against lower-tail risk and tournament context.
-5. After each round, review the realized distribution to understand where the model was right or wrong.
+5. Review the realized distribution after each round to understand where the model was right or wrong.
 
 This post-round review process mattered. It helped distinguish good reasoning that was unlucky from weak assumptions that needed correcting.
 
@@ -30,9 +30,11 @@ This post-round review process mattered. It helped distinguish good reasoning th
 
 The first manual round was a one-shot auction problem on `DRYLAND_FLAX` and `EMBER_MUSHROOM`.
 
-For each product, we submitted one buy order after the existing order book was known. The auction then selected the clearing price that maximized traded volume, with a higher-price tie-break. Because our order was added last, queue position was important: if we joined an existing price level, we were behind all existing demand at that level.
+For each product, we submitted one buy order after the existing order book was known. The auction selected the clearing price that maximized traded volume, with a higher-price tie-break. Because our order was added last, queue position mattered: if we joined an existing price level, we were behind all existing demand at that level.
 
-The key insight was that we paid the clearing price, not necessarily our submitted bid. That meant the optimal trade sat just below a threshold where one extra unit would push the clearing price higher and destroy profit.
+The key insight was that we paid the clearing price, not necessarily our submitted bid. That meant the optimal trade sat just below the quantity threshold where one extra unit pushed the clearing price higher and reduced or destroyed profit.
+
+![Round 1 auction threshold logic](assets/manual/round1-auction-thresholds.svg)
 
 ### DRYLAND_FLAX
 
@@ -46,7 +48,7 @@ Final order:
 
 | Product | Side | Price | Quantity | Clearing price | Profit/unit | Profit |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| DRYLAND_FLAX | Buy | 30 | 9,999 | 29 | 1.0 | 9,999 |
+| `DRYLAND_FLAX` | Buy | 30 | 9,999 | 29 | 1.0 | 9,999 |
 
 ### EMBER_MUSHROOM
 
@@ -54,13 +56,13 @@ Final order:
 - Base clearing price without our order: 15.
 - Submitting at 17 improved priority while keeping the clearing price in the profitable band.
 - Quantity region 10,000 to 19,999 forced a clearing price of 16.
-- At 20,000 units, the higher-price tie-break pushed the clearing price up again.
+- At 20,000 units, the higher-price tie-break pushed the clearing price to 17, reducing expected profit.
 
 Final order:
 
 | Product | Side | Price | Quantity | Clearing price | Profit/unit | Profit |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| EMBER_MUSHROOM | Buy | 17 | 19,999 | 16 | 3.9 | 77,996.1 |
+| `EMBER_MUSHROOM` | Buy | 17 | 19,999 | 16 | 3.9 | 77,996 |
 
 The logic-based approach was also verified with brute-force checks. Both methods produced the same optimal trade.
 
@@ -85,6 +87,8 @@ The pure model produced very strong high-EV choices:
 | Best decision | 43% | 42% | 15% | 218,468 | 100.0% |
 | Proposed decision 1 | 37% | 47% | 16% | 208,525 | 95.4% |
 
+![Round 2 allocation distribution](assets/manual/round2-allocation-distribution.svg)
+
 However, Round 1 had already put us close to the playoff threshold. The tournament objective was not to maximize Round 2 PnL; it was to reach the finals. I therefore chose a guaranteed-profit allocation:
 
 | Research | Scale | Speed | Result |
@@ -103,13 +107,15 @@ Round 3 was another game-theoretic manual problem. The payoff depended on:
 - the average second bid across the participant population;
 - the penalty for bidding too aggressively on the second bid.
 
-The model again separated the field into informed and less-informed groups. The spreadsheet evaluated candidate bids under central, lower-than-expected and higher-than-expected population averages. The final decision table stress-tested whether a bid pair still performed acceptably if the crowd was skewed away from our expectation.
+The model again separated the field into informed and less-informed groups. The spreadsheet evaluated candidate bids under central, lower-than-expected and higher-than-expected population averages. The final decision table stress-tested whether a bid pair still performed acceptably if the crowd was skewed away from expectation.
+
+![Round 3 bid stress test](assets/manual/round3-bid-stress-test.svg)
 
 Final submission:
 
-| First bid | Second bid |
-| ---: | ---: |
-| 791 | 856 |
+| First bid | Second bid | Result |
+| ---: | ---: | ---: |
+| 791 | 856 | 76,707 |
 
 The decision was not purely the maximum-return case. It was chosen because it balanced capture probability, missed-opportunity risk and robustness to population skew.
 
@@ -125,6 +131,8 @@ I brute-forced candidate option portfolios, then evaluated them through Monte Ca
 - median result;
 - 95th and 99th percentile upside.
 
+![Round 4 risk frontier](assets/manual/round4-risk-frontier.svg)
+
 Candidate summary:
 
 | Choice | EV | P(loss) | 1st pct | 5th pct | Median | 95th pct | Verdict |
@@ -134,6 +142,20 @@ Candidate summary:
 | 3 Improved #3 | 43,266 | 3.5% | -11,253 | 3,778 | 42,653 | 84,864 | Final selected strategy. |
 | 4 Improved #4 | 50,192 | 6.5% | -24,648 | -4,154 | 49,219 | 107,754 | More aggressive; 5th percentile negative. |
 | 5 Balanced | 110,527 | 20.2% | -180,739 | -99,232 | 106,913 | 332,118 | High variance; rejected. |
+
+Final selected order set:
+
+| Instrument | Signed volume | Order |
+| --- | ---: | --- |
+| `AC_50_P` | 6 | Buy 6 |
+| `AC_50_C` | 8 | Buy 8 |
+| `AC_35_P` | -50 | Sell 50 |
+| `AC_45_P` | 50 | Buy 50 |
+| `AC_50_P_2` | 5 | Buy 5 |
+| `AC_50_C_2` | 1 | Buy 1 |
+| `AC_50_CO` | -8 | Sell 8 |
+| `AC_40_BP` | -50 | Sell 50 |
+| `AC_45_KO` | 27 | Buy 27 |
 
 We chose Strategy 3. It had higher EV than the conservative choices while still keeping the validation 5th percentile positive.
 
@@ -151,6 +173,8 @@ The model converted each article into:
 - expected price change;
 - fee-adjusted expected value;
 - optimized position size.
+
+![Round 5 news allocation](assets/manual/round5-news-allocation.svg)
 
 Final allocation:
 

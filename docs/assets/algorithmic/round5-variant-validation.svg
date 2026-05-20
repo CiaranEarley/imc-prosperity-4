@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="650" viewBox="0 0 1160 650" role="img" aria-label="Round 5 variant validation">
+<rect width="100%" height="100%" fill="white"/>
+<text x="70" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0B3A5B" text-anchor="start" >Round 5 Algorithm: Variant Validation</text>
+<text x="70" y="80" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677A" text-anchor="start" >Final selection prioritized rolling-window robustness, drawdown and bad-window behavior rather than raw total alone.</text>
+<line x1="105" y1="500.0" x2="1095" y2="500.0" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="505.0" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >-50,000</text>
+<line x1="105" y1="465.9090909090909" x2="1095" y2="465.9090909090909" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="470.9090909090909" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >0</text>
+<line x1="105" y1="397.72727272727275" x2="1095" y2="397.72727272727275" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="402.72727272727275" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >100,000</text>
+<line x1="105" y1="329.54545454545456" x2="1095" y2="329.54545454545456" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="334.54545454545456" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >200,000</text>
+<line x1="105" y1="261.3636363636364" x2="1095" y2="261.3636363636364" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="266.3636363636364" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >300,000</text>
+<line x1="105" y1="193.1818181818182" x2="1095" y2="193.1818181818182" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="198.1818181818182" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >400,000</text>
+<line x1="105" y1="125.0" x2="1095" y2="125.0" stroke="#D9E4EC" stroke-width="1"/>
+<text x="93" y="130.0" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="end" >500,000</text>
+<line x1="105" y1="500" x2="1095" y2="500" stroke="#0B3A5B" stroke-width="1.5"/>
+<line x1="105" y1="125" x2="105" y2="500" stroke="#0B3A5B" stroke-width="1.5"/>
+<line x1="105" y1="465.9090909090909" x2="1095" y2="465.9090909090909" stroke="#0B3A5B" stroke-width="1.2"/>
+<rect x="152.0" y="155.28752272727274" width="32" height="310.62156818181813" rx="3" fill="#2176B8" stroke="none" />
+<rect x="188.0" y="217.96897727272727" width="32" height="247.9401136363636" rx="3" fill="#16805B" stroke="none" />
+<rect x="224.0" y="241.74465909090912" width="32" height="224.16443181818175" rx="3" fill="#B42318" stroke="none" />
+<text x="204.0" y="530" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#52677A" text-anchor="middle" >CS</text>
+<rect x="350.0" y="158.05824431818183" width="32" height="307.85084659090904" rx="3" fill="#2176B8" stroke="none" />
+<rect x="386.0" y="220.46988636363636" width="32" height="245.43920454545452" rx="3" fill="#16805B" stroke="none" />
+<rect x="422.0" y="244.53943181818184" width="32" height="221.36965909090904" rx="3" fill="#B42318" stroke="none" />
+<text x="402.0" y="530" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#52677A" text-anchor="middle" >CSSkew0Probe</text>
+<rect x="548.0" y="161.80333522727273" width="32" height="304.10575568181815" rx="3" fill="#2176B8" stroke="none" />
+<rect x="584.0" y="223.62363636363636" width="32" height="242.2854545454545" rx="3" fill="#16805B" stroke="none" />
+<rect x="620.0" y="246.64045454545456" width="32" height="219.26863636363632" rx="3" fill="#B42318" stroke="none" />
+<text x="600.0" y="530" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#52677A" text-anchor="middle" >CSSkew030Probe</text>
+<rect x="746.0" y="161.8638125" width="32" height="304.0452784090909" rx="3" fill="#2176B8" stroke="none" />
+<rect x="782.0" y="223.91000000000003" width="32" height="241.99909090909085" rx="3" fill="#16805B" stroke="none" />
+<rect x="818.0" y="237.65034090909091" width="32" height="228.25874999999996" rx="3" fill="#B42318" stroke="none" />
+<text x="798.0" y="530" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#52677A" text-anchor="middle" >CSPairFairProbe</text>
+<rect x="944.0" y="465.9090909090909" width="32" height="16.45532386363641" rx="3" fill="#2176B8" stroke="none" />
+<rect x="980.0" y="465.9090909090909" width="32" height="6.218181818181847" rx="3" fill="#16805B" stroke="none" />
+<rect x="1016.0" y="465.9090909090909" width="32" height="10.95409090909095" rx="3" fill="#B42318" stroke="none" />
+<text x="996.0" y="530" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#52677A" text-anchor="middle" >CSOffset0Probe</text>
+<rect x="820" y="126" width="14" height="14" rx="2" fill="#2176B8" stroke="none" />
+<text x="842" y="138" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="start" >Terminal-first score</text>
+<rect x="820" y="150" width="14" height="14" rx="2" fill="#16805B" stroke="none" />
+<text x="842" y="162" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="start" >10th percentile window</text>
+<rect x="820" y="174" width="14" height="14" rx="2" fill="#B42318" stroke="none" />
+<text x="842" y="186" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#52677A" text-anchor="start" >Worst 10k window</text>
+<text x="70" y="600" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#52677A" text-anchor="start" >The selected ColdSteel configuration was close to top raw PnL while preserving stronger distribution quality than more aggressive probes.</text>
+</svg>
